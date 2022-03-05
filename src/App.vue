@@ -1,9 +1,15 @@
 <template>
-	<div class="container">
+	<div class="container my-12 px-6 md:px-auto">
 		<nav>
 			<RouterLink to="/">Home</RouterLink>
 			<RouterLink to="/about">About</RouterLink>
 			<RouterLink to="/rdv">Rendez-vous</RouterLink>
+			<label class="swap text-9xl">
+				<!-- this hidden checkbox controls the state -->
+				<input type="checkbox" />
+				<div class="swap-on" @click="setTheme('forest')">❄</div>
+				<div class="swap-off" @click="setTheme('winter')">🌲</div>
+			</label>
 		</nav>
 		<RouterView v-if="store.user" />
 		<Auth v-else />
@@ -11,14 +17,13 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
 import { store } from "./stores/supabase.js";
 import { supabase } from "./supabase";
 import { RouterLink, RouterView } from "vue-router";
 
 import Auth from "./components/Auth.vue";
 import Profile from "./components/Profile.vue";
-
-import "@/assets/base.css";
 
 export default {
 	components: {
@@ -27,13 +32,43 @@ export default {
 	},
 
 	setup() {
+		let theme = ref("winter");
+		if (localStorage.theme === "forest" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+			theme.value = "forest";
+		}
+
+		function setTheme(to) {
+			if (theme.value !== to) {
+				theme.value = to;
+			}
+
+			localStorage.theme = to;
+
+			document.documentElement.dataset.theme = theme.value;
+		}
+
+		function toggleTheme() {
+			const toggleTo = theme.value === "winter" ? "forest" : "winter";
+			console.log(toggleTo);
+			setTheme(toggleTo);
+		}
+
+		setTheme(theme.value);
+
 		store.user = supabase.auth.user();
 		supabase.auth.onAuthStateChange((_, session) => {
 			store.user = session.user;
 		});
 
+		onMounted(() => {
+			setTheme(theme.value);
+		});
+
 		return {
+			theme,
 			store,
+			toggleTheme,
+			setTheme,
 		};
 	},
 };
@@ -51,12 +86,6 @@ export default {
 header {
 	line-height: 1.5;
 	max-height: 100vh;
-}
-
-.container {
-	padding: 50px 40px 100px;
-	box-sizing: border-box;
-	width: 100%;
 }
 
 .logo {

@@ -1,0 +1,76 @@
+Calendar
+	Rendez-vous
+		Jour de semaine
+		Date
+		Mois
+		Nom du résident (abbréviation)
+			Nickname
+				GK
+				KD
+				RB
+				TTN
+				MM
+				TML
+				JL
+				SB
+				HB
+				GC
+				Chantale
+		Heure
+		Type
+			Au téléphone
+			À la CA (Clef d'Arc)
+			En personne, seul
+			En personne, accompagné
+				Si accompagné, nom de l'intervenant
+		Raisons du rdv -> NORMALLY ONLY ONE REASON, VERY rarely more than one. The UI should reflect that.
+			Injection
+			Psychiâtre
+			Psychologue
+			Intervenant en toxicomanie
+			Dermatologue
+			Vaccination
+			Atelier
+			Culture Sang, Sel et Urine
+			Prise de Sang
+			Généraliste
+			Plombier
+			Électricien
+			Dentiste
+			Podiâtre
+			Autre (préciser)
+		Avec qui ? ---
+		Endroit ---
+		Contact info (to join the place/person) <<<
+		Notes
+		Pour accompagnateur seulement : moyen de mettre une note sur le rendez-vous comme quoi il est indisponible, et le rdv devrait être réassigné à un autre accompagnateur.
+
+
+Endroits
+	Nom
+	Adresse
+	Examples of locations :
+		- CLSC Mtl-Nord
+		- CSSS Ahuntsic
+		- Hôpital Notre-Dame, Pavillon Mailloux
+		- Palais de Justice
+		- Clinique St-André
+		- CLSC Villeray
+
+
+Personnel médical
+	Nom
+	Titre
+	Contact info
+	Endroit(s) (où ils travaillent) ---
+
+
+Users
+	Role
+		Admin : read all, edit all
+		Accompagnateur : readonly, access only to the info they really need
+
+
+
+--- = foreign key
+<<< = not actual field in table, just gets "inherited" from another table, I'm putting it there just as a reminder
